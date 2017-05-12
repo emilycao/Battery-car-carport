@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>scrollwheel</title>
+    <style>
+	* { 
+	padding: 0; 
+	margin: 0;
+	}
+	#myimage { 
+	z-index: -100;
+	}
+	.pointArea {
+		position: absolute;
+		background-color: rgba(0,0,0,.5);
+		text-align: center;
+	}
+	.pointA,.pointB {
+		width: 45px;
+		height: 210px;
+		overflow: hidden;
+	}
+	#aData,#bData {
+		width: 45px;
+		background-color: #09ee5a;
+	}
+	.pointC {
+		width: 210px;
+		height: 45px;
+		overflow: hidden;
+	}
+	#cData {
+		height: 45px;
+		background-color: #09ee5a;
+	}
+	#popTip {
+		position: absolute;
+		background: #fff;
+		border: 1px solid #eee;
+		width: 550px;
+		height: 320px;
+		overflow: hidden;
+	}
+	.closeBg {
+		width: 100%;
+		background-color: #ccc;
+		height: 25px;
+	}
+	#closeBtn {
+	position: absolute;
+	right: 12px;
+	top: 2px;
+	cursor: pointer;
+	}
+	.bgColor{
+    -webkit-animation: twinkling 1s infinite ease-in-out;
+	color: #fff;
+    }
+    
+    @-webkit-keyframes twinkling{
+    
+    0%{
+    background-color: red;
+    opacity: 0.5;
+    
+    }
+    
+    100%{
+    
+    opacity: 1;
+    
+    }
+    
+    }
+    .sTable,sTable {
+	width: 100%;
+	}
+	.thTable thead tr {
+    display:block;
+    } 
+	.thTable thead tr th {
+	text-align: center;
+	line-height: 35px;
+	}
+	.content {
+	height: 260px;
+	overflow: auto;
+	}
+	.sTable {
+	display: block !important;
+	}
+	.sTable tbody tr {
+	border-bottom: 1px solid #ececec;
+	line-height: 30px;
+	table-layout:fixed;
+	}
+	.sTable tbody tr td{
+	text-align: center;
+	padding: 0 3px;
+	}
+	</style>
+</head>
+ <div id="popTip" style="display: none;">
+        <div class="closeBg"><span id="closeBtn">X</span></div>
+		<table class="thTable">
+			<thead >
+				<tr>
+                    <th width="50px">车位号</th>
+					<th width="99px">车牌号码</th>
+					<th width="71px">姓名</th>
+					<th width="137.5px">身份证号</th>
+					<th width="137.5px">绑定标签号</th>
+					<th width="55px">状态</th>
+                </tr>
+            </thead>
+        </table>
+		<div class="content">
+			<table class="sTable" id="sTable">
+				<tbody >
+					
+                </tbody>
+            </table>
+    	</div>
+    </div>
+	<div id="pointA" class="pointArea pointA" onclick="showFn('pointA','left','site1')">
+		<div id="aData"></div>
+	</div>
+	<div id="pointB" class="pointArea pointB" onclick="showFn('pointB','right','site2')">
+		<div id="bData"></div>
+	</div>
+	<div id="pointC" class="pointArea pointC" onclick="showFn('pointC','bottom','site3')">
+		<div id="cData"></div>
+	</div>
+	<img id="myimage" src="images/park_pic.jpg" alt="my image" width="1500"/>
+
+    <script type="text/javascript">
+		function $$(id) {
+    		return document.getElementById(id);
+    	}
+		var datas = {
+		"site1":
+		[
+			{"carNum":"001","plateNum":"HDD001","name":"电动车1","ID":"300100200001011234","tagNum":"562906760898","status":"正常"},
+            {"carNum":"002","plateNum":"HDD001","name":"电动车1","ID":"300100200001011234","tagNum":"562906760898","status":"正常"},
+            {"carNum":"003","plateNum":"HDD001","name":"电动车1","ID":"300100200001011234","tagNum":"562906760898","status":"正常"}
+		],
+		"site2":
+		[
+			{"carNum":"001","plateNum":"HDD001","name":"电动车1","ID":"300100200001011234","tagNum":"562906760898","status":"正常"},
+			{"carNum":"002","plateNum":"HDD001","name":"电动车1","ID":"300100200001011234","tagNum":"562906760898","status":"正常"},
+			{"carNum":"003","plateNum":"HDD001","name":"电动车1","ID":"300100200001011234","tagNum":"562906760898","status":"正常"},
+			{"carNum":"004","plateNum":"HDD001","name":"电动车1","ID":"300100200001011234","tagNum":"562906760898","status":"正常"},
+			{"carNum":"005","plateNum":"HDD001","name":"电动车1","ID":"300100200001011234","tagNum":"562906760898","status":"正常"},
+			{"carNum":"006","plateNum":"HDD001","name":"电动车1","ID":"300100200001011234","tagNum":"562906760898","status":"正常"},
+			{"carNum":"007","plateNum":"HDD001","name":"电动车1","ID":"300100200001011234","tagNum":"562906760898","status":"正常"},
+			{"carNum":"008","plateNum":"HDD001","name":"电动车1","ID":"300100200001011234","tagNum":"562906760898","status":"正常"},
+			{"carNum":"009","plateNum":"HDD001","name":"电动车1","ID":"300100200001011234","tagNum":"562906760898","status":"正常"},
+			{"carNum":"010","plateNum":"HDD001","name":"电动车1","ID":"300100200001011234","tagNum":"562906760898","status":"正常"},
+			{"carNum":"011","plateNum":"HDD001","name":"电动车1","ID":"300100200001011234","tagNum":"562906760898","status":"正常"},
+			{"carNum":"012","plateNum":"HDD001","name":"电动车1","ID":"300100200001011234","tagNum":"562906760898","status":"正常"},
+			{"carNum":"013","plateNum":"HDD001","name":"电动车1","ID":"300100200001011234","tagNum":"562906760898","status":"正常"},
+			{"carNum":"014","plateNum":"HDD001","name":"电动车1","ID":"300100200001011234","tagNum":"562906760898","status":"正常"},
+			{"carNum":"015","plateNum":"HDD001","name":"电动车1","ID":"300100200001011234","tagNum":"562906760898","status":"正常"},
+			{"carNum":"016","plateNum":"HDD001","name":"电动车1","ID":"300100200001011234","tagNum":"562906760898","status":"正常"},
+			{"carNum":"017","plateNum":"HDD001","name":"电动车1","ID":"300100200001011234","tagNum":"562906760898","status":"正常"},
+			{"carNum":"018","plateNum":"HDD001","name":"电动车1","ID":"300100200001011234","tagNum":"562906760898","status":"正常"},
+			{"carNum":"019","plateNum":"HDD001","name":"电动车1","ID":"300100200001011234","tagNum":"562906760898","status":"正常"},
+			{"carNum":"020","plateNum":"HDD001","name":"电动车1","ID":"300100200001011234","tagNum":"562906760898","status":"正常"},
+			{"carNum":"021","plateNum":"HDD001","name":"电动车1","ID":"300100200001011234","tagNum":"562906760898","status":"正常"},
+			{"carNum":"022","plateNum":"HDD001","name":"电动车1","ID":"300100200001011234","tagNum":"562906760898","status":"正常"},
+			{"carNum":"023","plateNum":"HDD001","name":"电动车1","ID":"300100200001011234","tagNum":"562906760898","status":"正常"},
+			{"carNum":"024","plateNum":"HDD001","name":"电动车1","ID":"300100200001011234","tagNum":"562906760898","status":"正常"},
+			{"carNum":"025","plateNum":"HDD001","name":"电动车1","ID":"300100200001011234","tagNum":"562906760898","status":"正常"},
+			{"carNum":"026","plateNum":"HDD001","name":"电动车1","ID":"300100200001011234","tagNum":"562906760898","status":"正常"},
+			{"carNum":"027","plateNum":"HDD001","name":"电动车1","ID":"300100200001011234","tagNum":"562906760898","status":"正常"},
+			{"carNum":"028","plateNum":"HDD001","name":"电动车1","ID":"300100200001011234","tagNum":"562906760898","status":"正常"},
+			{"carNum":"029","plateNum":"HDD001","name":"电动车1","ID":"300100200001011234","tagNum":"562906760898","status":"正常"},
+			{"carNum":"030","plateNum":"HDD001","name":"电动车1","ID":"300100200001011234","tagNum":"562906760898","status":"正常"}
+		],
+		"site3":
+		[
+			{"carNum":"001","plateNum":"HDD001","name":"电动车1","ID":"300100200001011234","tagNum":"562906760898","status":"正常"},
+			{"carNum":"002","plateNum":"HDD001","name":"电动车1","ID":"300100200001011234","tagNum":"562906760898","status":"正常"},
+			{"carNum":"003","plateNum":"HDD001","name":"电动车1","ID":"300100200001011234","tagNum":"562906760898","status":"正常"},
+			{"carNum":"004","plateNum":"HDD001","name":"电动车1","ID":"300100200001011234","tagNum":"562906760898","status":"正常"},
+			{"carNum":"005","plateNum":"HDD001","name":"电动车1","ID":"300100200001011234","tagNum":"562906760898","status":"正常"},
+			{"carNum":"006","plateNum":"HDD001","name":"电动车1","ID":"300100200001011234","tagNum":"562906760898","status":"正常"},
+			{"carNum":"007","plateNum":"HDD001","name":"电动车1","ID":"300100200001011234","tagNum":"562906760898","status":"正常"},
+			{"carNum":"008","plateNum":"HDD001","name":"电动车1","ID":"300100200001011234","tagNum":"562906760898","status":"正常"},
+			{"carNum":"009","plateNum":"HDD001","name":"电动车1","ID":"300100200001011234","tagNum":"562906760898","status":"正常"},
+			{"carNum":"010","plateNum":"HDD001","name":"电动车1","ID":"300100200001011234","tagNum":"562906760898","status":"正常"},
+			{"carNum":"011","plateNum":"HDD001","name":"电动车1","ID":"300100200001011234","tagNum":"562906760898","status":"正常"},
+			{"carNum":"012","plateNum":"HDD001","name":"电动车1","ID":"300100200001011234","tagNum":"562906760898","status":"正常"},
+			{"carNum":"013","plateNum":"HDD001","name":"电动车1","ID":"300100200001011234","tagNum":"562906760898","status":"正常"},
+			{"carNum":"014","plateNum":"HDD001","name":"电动车1","ID":"300100200001011234","tagNum":"562906760898","status":"正常"},
+			{"carNum":"015","plateNum":"HDD001","name":"电动车1","ID":"300100200001011234","tagNum":"562906760898","status":"正常"},
+			{"carNum":"016","plateNum":"HDD001","name":"电动车1","ID":"300100200001011234","tagNum":"562906760898","status":"正常"},
+			{"carNum":"017","plateNum":"HDD001","name":"电动车1","ID":"300100200001011234","tagNum":"562906760898","status":"正常"},
+			{"carNum":"018","plateNum":"HDD001","name":"电动车1","ID":"300100200001011234","tagNum":"562906760898","status":"正常"},
+			{"carNum":"019","plateNum":"HDD001","name":"电动车1","ID":"300100200001011234","tagNum":"562906760898","status":"正常"},
+			{"carNum":"020","plateNum":"HDD001","name":"电动车1","ID":"300100200001011234","tagNum":"562906760898","status":"正常"},
+			{"carNum":"021","plateNum":"HDD001","name":"电动车1","ID":"300100200001011234","tagNum":"562906760898","status":"正常"},
+			{"carNum":"022","plateNum":"HDD001","name":"电动车1","ID":"300100200001011234","tagNum":"562906760898","status":"正常"},
+			{"carNum":"023","plateNum":"HDD001","name":"电动车1","ID":"300100200001011234","tagNum":"562906760898","status":"正常"},
+			{"carNum":"024","plateNum":"HDD001","name":"电动车1","ID":"300100200001011234","tagNum":"562906760898","status":"正常"},
+			{"carNum":"025","plateNum":"HDD001","name":"电动车1","ID":"300100200001011234","tagNum":"562906760898","status":"正常"},
+			{"carNum":"026","plateNum":"HDD001","name":"电动车1","ID":"300100200001011234","tagNum":"562906760898","status":"正常"},
+			{"carNum":"027","plateNum":"HDD001","name":"电动车1","ID":"300100200001011234","tagNum":"562906760898","status":"正常"},
+			{"carNum":"028","plateNum":"HDD001","name":"电动车1","ID":"300100200001011234","tagNum":"562906760898","status":"正常"},
+			{"carNum":"029","plateNum":"HDD001","name":"电动车1","ID":"300100200001011234","tagNum":"562906760898","status":"正常"},
+			{"carNum":"030","plateNum":"HDD001","name":"电动车1","ID":"300100200001011234","tagNum":"562906760898","status":"正常"},
+			{"carNum":"031","plateNum":"HDD001","name":"电动车1","ID":"300100200001011234","tagNum":"562906760898","status":"正常"}
+		],
+		
+		};
+		window.onload = function () {
+		//添加鼠标滚轮事件处理代码
+	    var myimage = $$("myimage");
+	    if (myimage.addEventListener) {
+	        // IE9, Chrome, Safari, Opera
+	        myimage.addEventListener("mousewheel", MouseWheelHandler, false);
+	        // Firefox
+	        myimage.addEventListener("DOMMouseScroll", MouseWheelHandler, false);
+	    }
+	    // IE 6/7/8
+	    loadFn ();
+	}
+	
+    
+    //为了让不同浏览器都能支持的处理做法,我们将对Firefox的detail值取反然后返回1或者-1的其中一个
+    function MouseWheelHandler(e) {
+        // cross-browser wheel delta
+        var e = window.event || e; // old IE support
+        var delta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
+        //现在我们直接决定图片的大小范围。以下代码将图片的宽度范围设置在50-800个像素之间
+        var imageWidth = myimage.style.width = Math.max(1200, Math.min(2300, myimage.width + (30 * delta))) + "px";
+        var imageHeight = myimage.offsetHeight;
+        // 最后一点，我们在方法中返回false是为了终止标准的鼠标滚轮事件处理，以防它上下滑动网页
+        loadFn ()
+        return false;
+    }
+	function loadFn () {
+		var data1 = datas.site1.length,
+			data2 = datas.site2.length,
+			data3 = datas.site3.length;
+		new Site ('myimage','pointA','aData',1);
+	    new Site ('myimage','pointB','bData',2);
+	    new Site ('myimage','pointC','cData',3);
+		//各电动车棚停车的数据
+	    new LengthFn ('pointA','aData',data1,1);
+       	new LengthFn ('pointB','bData',data2,1);
+       	new LengthFn ('pointC','cData',data3,0);
+	}
+    /*
+	 *point : 例如 pointA
+	 *data : 例如 aData
+	 *myimage : 是背景图片
+	 */
+	function Site (myimage,point,data,type) {
+		var opoint = $$(point),
+			odata = $$(data),
+			myimage = $$(myimage),
+			imageWidth = myimage.offsetWidth,
+            imageHeight = myimage.offsetHeight;
+		if ( type === 1 ) {
+			opoint.style.cssText = 'left:'+ parseInt(imageWidth) * 0.045 + 'px' + ';top:'+ parseInt(imageHeight) * 0.186 + 'px;';
+		}else if ( type === 2 ) {
+			opoint.style.cssText = 'left:'+ parseInt(imageWidth) * 0.942 + 'px' + ';top:'+ parseInt(imageHeight) * 0.187 + 'px;';
+		}else if ( type === 3 ) {
+			opoint.style.cssText = 'left:'+ parseInt(imageWidth) * 0.603 + 'px' + ';top:'+ parseInt(imageHeight) * 0.82  + 'px;';
+		}
+
+	}
+	/*
+	 *point : 例如 pointA
+	 *data : 例如 aData
+	 * num ：是电动车停放的数量
+	 * type : 如0或1
+	 */
+	function LengthFn (point,data,num,type) {
+		var opoint = $$(point),
+			odata = $$(data),
+			percent = 210 / 30,
+			olength = num * percent;
+			odata.innerHTML = num;
+		if ( type === 1) {
+			var offset = opoint.offsetHeight;
+			if ( olength > offset ) {
+				odata.style.backgroundColor = 'red';
+				odata.className = 'bgColor';
+				odata.style.height = '210px';
+			}else {
+				odata.style.height = olength + 'px';
+			}
+		} else if ( type === 0 ) {
+			var offset = opoint.offsetWidth;
+			if ( olength > offset ) {
+				odata.style.backgroundColor = 'red';
+				odata.className = 'bgColor';
+				odata.style.width = '210px';
+			}else {
+				odata.style.width = olength + 'px';
+			}
+		}
+		
+
+	}
+	/**
+	 * [showFn description]
+	 * @param  {[type]} id   [description] 点击对象
+	 * @param  {[type]} type [description] 分为：left,right,bottom
+	 * @return {[type]} dataType    [description] JSON数据类型，如site1
+	 */
+	function showFn (id,type,dataType) {
+		var oLeft = pos(id).left,
+			oTop = pos(id).top,
+			oclose = $$('closeBtn');
+		if (type === 'left') {
+			popTip.style.cssText = 'display:block;left:' + (parseFloat(oLeft) + parseFloat($$(id).offsetWidth)) + 'px;top:' + oTop + ';';
+		}else if (type === 'right') {
+			popTip.style.cssText = 'display:block;left:' + (parseFloat(oLeft) - 550) + 'px;top:' + oTop + ';';
+		}else if (type === 'bottom') {
+			popTip.style.cssText = 'display:block;left:' + (parseFloat(oLeft) - 550) + 'px;top:' + (parseFloat(oTop) - 320 ) + 'px;';
+		}
+		//添加数据
+		var sTable = $$('sTable'),
+			html = '';
+		if(dataType === 'site1') {
+			if (datas.site1.length === 0) {
+				html += '<tr>';
+                html += 	'<td width="550px"> <strong>车棚里没有停放车！</strong></td>';	
+    			html +=	'</tr>';
+			}
+    		for(var i = 0; i < datas.site1.length; i++ ) {
+                html += '<tr>';
+                html += 	'<td width="50px">' + datas.site1[i].carNum + '</td>';	
+    			html += 	'<td width="99px">' + datas.site1[i].plateNum + '</td>';	
+    			html += 	'<td width="71px">' + datas.site1[i].name + '</td>';	
+    			html += 	'<td width="137.5px">' + datas.site1[i].ID + '</td>';	
+    			html += 	'<td width="137.5px">' + datas.site1[i].tagNum + '</td>';	
+    			html += 	'<td width="55px">' + datas.site1[i].status + '</td>';	
+    			html +=	'</tr>';
+    		}
+		}else if(dataType === 'site2') {
+			if (datas.site2.length === 0) {
+				html += '<tr>';
+                html += 	'<td width="550px"> <strong>车棚里没有停放车！</strong></td>';	
+    			html +=	'</tr>';
+			}
+			for(var i = 0; i < datas.site2.length; i++ ) {
+                html += '<tr>';
+                html += 	'<td width="50px">' + datas.site2[i].carNum + '</td>';	
+    			html += 	'<td width="99px">' + datas.site2[i].plateNum + '</td>';	
+    			html += 	'<td width="71px">' + datas.site2[i].name + '</td>';	
+    			html += 	'<td width="137.5px">' + datas.site2[i].ID + '</td>';	
+    			html += 	'<td width="137.5px">' + datas.site2[i].tagNum + '</td>';	
+    			html += 	'<td width="55px">' + datas.site2[i].status + '</td>';	
+    			html +=	'</tr>';
+    		}
+		}else if(dataType === 'site3') {
+			if (datas.site3.length === 0) {
+				html += '<tr>';
+                html += 	'<td width="550px"> <strong>车棚里没有停放车！</strong></td>';	
+    			html +=	'</tr>';
+			}
+			for(var i = 0; i < datas.site3.length; i++ ) {
+                html += '<tr>';
+                html += 	'<td width="50px">' + datas.site3[i].carNum + '</td>';	
+    			html += 	'<td width="99px">' + datas.site3[i].plateNum + '</td>';	
+    			html += 	'<td width="71px">' + datas.site3[i].name + '</td>';	
+    			html += 	'<td width="137.5px">' + datas.site3[i].ID + '</td>';	
+    			html += 	'<td width="137.5px">' + datas.site3[i].tagNum + '</td>';	
+    			html += 	'<td width="55px">' + datas.site3[i].status + '</td>';	
+    			html +=	'</tr>';
+    		}
+		}
+		var newDiv = document.createElement('div');
+		newDiv.innerHTML = '<table></tbody>' + html + '</tbody></table>';
+		var newTbody = newDiv.childNodes[0].tBodies[0];
+        var oldTbody = sTable.tBodies[0];
+        sTable.replaceChild(newTbody, oldTbody);
+		oclose.onclick = function () {
+			popTip.style.display = 'none';
+		}
+	}
+	/** 
+	*获取页面某个元素当前的样式：(譬如获取当前INPUT的宽度，border的样式、border颜色等) 
+	*@param domID 文档对象的ID 或者直接传DOM文档对象 
+	*@param propName  样式属性 
+	*@return 返回当前元素的样式 
+	*注意：propName不要聚合写法(eg:borer)，要分拆写法(eg:borderStyle 只支持IE)，越详细越好(eg:borderLeftStyle 支持所有浏览器) 
+	* 
+	*/  
+	var getStyle = function(domID,propName){  
+	    var dom = null;  
+	    if(typeof(domID)=="object" && !!domID.tagName==true){  
+	        dom = domID;//直接传递文档对象  
+	    }else{  
+	        dom = document.getElementById(domID);//传递文档对象的ID  
+	    }  
+	    if(dom==null){return "";}  
+	    //兼容IE，chrome，FF等浏览器的写法：【 注意属性写法规则：严格要求写全名称，否则失效返回"" 】  
+	    var currentStyle = dom.currentStyle ||document.defaultView.getComputedStyle(dom,null);    
+	    return currentStyle[propName] ||"";  
+	}   
+	function pos (ev) {
+		var div=$$(ev);
+		var top,left;
+		left = getStyle(div,'left');
+		top = getStyle(div,'top');
+		
+		return {
+			left : left,
+			top : top
+		}
+	};
+
+    </script>
+</body>
+</html>
